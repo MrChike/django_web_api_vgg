@@ -8,7 +8,6 @@ from django.conf import settings
 
 
 class UsersProfileManager(BaseUserManager):
-
     def create_user(self, email, username, password=None):
         if not email:
             raise ValueError('User must have an email address')
@@ -32,6 +31,7 @@ class UsersProfileManager(BaseUserManager):
 
 
 class Users(AbstractBaseUser, PermissionsMixin):
+    # Users model
     username = models.CharField(max_length=50, default=None)
     email = models.EmailField(max_length=100, unique=True, default=None)
     is_active = models.BooleanField(default=True)
@@ -65,6 +65,7 @@ class Projects(models.Model):
 
 
 class Actions(models.Model):
+    # Actions model
     project_id = models.ForeignKey(Projects, on_delete=models.CASCADE)
     description = models.TextField()
     note = models.TextField()
