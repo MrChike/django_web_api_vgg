@@ -4,8 +4,9 @@ from . import views
 
 
 router = DefaultRouter()
-router.register('app-viewset', views.AppViewSet, basename='app-viewset')
+router.register('users/register', views.UsersProfileViewSet)
 
 urlpatterns = [
-    path('', include(router.urls))
+    path('users/auth', views.UsersAuthApiView.as_view()),
+    path('', include(router.urls)),
 ]
