@@ -3,6 +3,9 @@ from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
 
+##
+from django.conf import settings
+
 
 class UsersProfileManager(BaseUserManager):
 
@@ -29,8 +32,8 @@ class UsersProfileManager(BaseUserManager):
 
 
 class Users(AbstractBaseUser, PermissionsMixin):
-    username = models.CharField(max_length=50)
-    email = models.EmailField(max_length=100, unique=True)
+    username = models.CharField(max_length=50, default=None)
+    email = models.EmailField(max_length=100, unique=True, default=None)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
@@ -50,6 +53,9 @@ class Users(AbstractBaseUser, PermissionsMixin):
 
 
 class Projects(models.Model):
+    # Link & Authenticate Projects to Users
+    users_profile = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(max_length=50, unique=True)
     description = models.TextField()
     is_complete = models.BooleanField(null=True)

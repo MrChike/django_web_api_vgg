@@ -18,4 +18,15 @@ class UsersProfileViewSet(viewsets.ModelViewSet):
 
 
 class UsersAuthApiView(ObtainAuthToken):
+    # Create authentication tokens
     renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
+
+
+class ProjectsViewSet(viewsets.ModelViewSet):
+    authentication_classes = (TokenAuthentication,)
+    serializer_class = serializers.ProjectsSerializer
+    queryset = models.Projects.objects.all()
+
+    def perform_create(self, serializer):
+        # assign correct user profile when logged in
+        serializer.save(user_profile=self.request.user)

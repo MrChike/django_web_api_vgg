@@ -5,6 +5,7 @@ from . import views
 
 router = DefaultRouter()
 router.register('users/register', views.UsersProfileViewSet)
+router.register('projects', views.ProjectsViewSet)
 
 urlpatterns = [
     path('users/auth', views.UsersAuthApiView.as_view()),
